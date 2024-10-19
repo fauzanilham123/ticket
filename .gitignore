@@ -1,6 +1,9 @@
 /.fleet
 /.idea
 /.vscode
+/public/file/*
+!/public/file/
+!/public/file/.gitkeep
 .env
 .env.backup
 .env.production
