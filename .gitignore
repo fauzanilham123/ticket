@@ -1,6 +1,7 @@
 /.fleet
 /.idea
 /.vscode
+/public/file/*
 .env
 .env.backup
 .env.production
