@@ -1,8 +1,9 @@
 package entity
 
 import (
-	"github.com/gin-gonic/gin"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type (
@@ -12,7 +13,6 @@ type (
 		Slug      string    `json:"slug" gorm:"primary_key"`
 		Desc      string    `gorm:"text" json:"desc"`
 		Img       string    `gorm:"text" json:"img"`
-		Flag      bool      `json:"flag"`
 		CreatedAt time.Time `json:"created_at"`
 		UpdatedAt time.Time `json:"updated_at"`
 	}
@@ -28,10 +28,10 @@ type (
 	}
 
 	BannerInput struct {
-		Title     string    `json:"title" form:"title" binding:"required"`
-		Slug      string    `json:"slug" form:"slug" binding:"required"`
-		Desc      string    `json:"desc" form:"desc" binding:"required"`
-		Flag      bool      `json:"flag"`
+		Title string `json:"title" form:"title" binding:"required"`
+		Slug  string `json:"slug" form:"slug" binding:"required"`
+		Desc  string `json:"desc" form:"desc" binding:"required"`
+
 		CreatedAt time.Time `json:"created_at"`
 		UpdatedAt time.Time `json:"updated_at"`
 	}

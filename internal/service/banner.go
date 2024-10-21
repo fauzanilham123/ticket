@@ -5,10 +5,11 @@ import (
 	"api-ticket/internal/entity"
 	"api-ticket/utils"
 	"errors"
-	"github.com/gin-gonic/gin"
 	"log"
 	"path/filepath"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type BannerService struct {
@@ -70,7 +71,6 @@ func (service BannerService) Create(c *gin.Context, req entity.BannerInput) (err
 		Slug:      req.Slug,
 		Desc:      req.Desc,
 		Img:       img,
-		Flag:      true,
 		CreatedAt: time.Now(),
 	}
 

@@ -18,17 +18,17 @@ type Response struct {
 	Code       int         `json:"code"`
 	Message    string      `json:"message"`
 	Result     interface{} `json:"result"`
-	Pagination Paginations `json:"pagination"`
+	Pagination Paginations `json:"pagination,omitempty"`
 }
 
 type Paginations struct {
-	CurrentPage int   `json:"current_page"`
-	PerPage     int   `json:"per_page"`
-	LastPage    int   `json:"last_page"`
-	NextPage    int   `json:"next_page"`
-	PrevPage    int   `json:"prev_page"`
-	TotalPages  int   `json:"total_pages"`
-	TotalCount  int64 `json:"total_count"`
+	CurrentPage int   `json:"current_page,omitempty"`
+	PerPage     int   `json:"per_page,omitempty"`
+	LastPage    int   `json:"last_page,omitempty"`
+	NextPage    int   `json:"next_page,omitempty"`
+	PrevPage    int   `json:"prev_page,omitempty"`
+	TotalPages  int   `json:"total_pages,omitempty"`
+	TotalCount  int64 `json:"total_count,omitempty"`
 }
 
 type Pagination struct {
@@ -43,7 +43,6 @@ func SendResponse(ctx *gin.Context, result interface{}, message string) {
 		Message: message,
 		Result:  result,
 	}
-
 	ctx.JSON(http.StatusOK, response)
 }
 func SendResponseGetAll(ctx *gin.Context, result interface{}, message string, pagination Paginations) {
