@@ -1,0 +1,9 @@
+basePath: /v1/banners
+host: localhost:8000
+info:
+  contact: {}
+  description: This is an API documentation for Ticket Service.
+  title: API Ticket Service
+  version: "1.0"
+paths: {}
+swagger: "2.0"

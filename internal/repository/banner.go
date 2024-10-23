@@ -3,6 +3,7 @@ package repository
 import (
 	"api-ticket/internal/entity"
 	"errors"
+
 	"gorm.io/gorm"
 )
 
@@ -51,4 +52,39 @@ func (repo *BannerRepository) FindAll(filter entity.RequestGetBanner) ([]entity.
 	}
 
 	return banners, totalCount, nil
+}
+
+func (repo *BannerRepository) FindByID(id string) (entity.Banner, error) {
+	// Cari banner berdasarkan ID
+	var banners entity.Banner
+	err := repo.db.Where("id = ?", id).First(&banners).Error
+	return banners, err
+}
+
+func (repo *BannerRepository) Delete(id string) (entity.Banner, error) {
+	// Cari banner berdasarkan ID
+	var banner entity.Banner
+	if err := repo.db.First(&banner, "id = ?", id).Error; err != nil {
+		return banner, err
+	}
+	// Hapus banner yang ditemukan berdasarkan ID
+	if err := repo.db.Delete(&banner).Error; err != nil {
+		return banner, err
+	}
+	return banner, nil
+}
+
+func (repo *BannerRepository) Update(id string, updatedBanner entity.Banner) (entity.Banner, error) {
+	// Cari banner berdasarkan ID terlebih dahulu
+	var banner entity.Banner
+	if err := repo.db.First(&banner, "id = ?", id).Error; err != nil {
+		return banner, err
+	}
+
+	// Lakukan update dengan nilai-nilai dari updatedBanner
+	if err := repo.db.Model(&banner).Updates(updatedBanner).Error; err != nil {
+		return banner, err
+	}
+
+	return banner, nil
 }

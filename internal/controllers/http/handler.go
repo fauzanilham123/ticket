@@ -2,7 +2,12 @@ package http
 
 import (
 	"api-ticket/internal/entity"
+
+	_ "api-ticket/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
 type Router struct {
@@ -18,6 +23,7 @@ func RouteService(
 	}
 
 	//Apply Middleware here
+	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	router.handlers(app)
 }

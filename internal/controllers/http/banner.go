@@ -2,16 +2,107 @@ package http
 
 import (
 	"api-ticket/internal/entity"
-	"github.com/gin-gonic/gin"
 	"math"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
+// initBannerURLRoutes initializes banner routes with Swagger documentation
 func (r *Router) initBannerURLRoutes(app *gin.RouterGroup) {
 	banners := app.Group("banners")
 	{
-		banners.POST("/add", r.CreateBanner)
+		// @Summary Create a new banner
+		// @Description Create a new banner with the given information
+		// @Tags banners
+		// @Accept  json
+		// @Produce  json
+		// @Param banner body entity.BannerInput true "Banner input"
+		// @Success 200 {object} entity.Banner
+		// @Failure 400 {object} ErrorResponse
+		// @Router /banners/ [post]
+		banners.POST("/", r.CreateBanner)
+
+		// @Summary Get all banners
+		// @Description Retrieve a list of all banners
+		// @Tags banners
+		// @Produce  json
+		// @Success 200 {array} entity.Banner
+		// @Failure 400 {object} ErrorResponse
+		// @Router /banners/ [get]
 		banners.GET("/", r.GetAllBanner)
+
+		// @Summary Get a banner by ID
+		// @Description Retrieve a banner by its ID
+		// @Tags banners
+		// @Produce  json
+		// @Param id path string true "Banner ID"
+		// @Success 200 {object} entity.Banner
+		// @Failure 404 {object} ErrorResponse
+		// @Router /banners/{id} [get]
+		banners.GET("/:id", r.GetBannerById)
+
+		// @Summary Update a banner
+		// @Description Update a banner by its ID
+		// @Tags banners
+		// @Accept  json
+		// @Produce  json
+		// @Param id path string true "Banner ID"
+		// @Param banner body entity.BannerInput true "Banner input"
+		// @Success 200 {object} entity.Banner
+		// @Failure 400 {object} ErrorResponse
+		// @Router /banners/{id} [patch]
+		banners.PATCH("/:id", r.UpdateBanner)
+
+		// @Summary Delete a banner
+		// @Description Delete a banner by its ID
+		// @Tags banners
+		// @Param id path string true "Banner ID"
+		// @Success 200 {object} map[string]string
+		// @Failure 404 {object} ErrorResponse
+		// @Router /banners/{id} [delete]
+		banners.DELETE("/:id", r.DeleteBanner)
 	}
+}
+func (r *Router) GetBannerById(c *gin.Context) {
+	// Ambil ID dari parameter URL
+	id := c.Param("id")
+	// Panggil service untuk menemukan banner berdasarkan ID
+	banner, err := r.bannerService.FindByID(c, id)
+	if err != nil {
+		SendError(c, "record not found", err.Error(), 404)
+		return
+	}
+
+	var scheme string
+	if c.Request.TLS != nil {
+		scheme = "https://"
+	} else {
+		scheme = "http://"
+	}
+	serverAddress := scheme + c.Request.Host
+	banner.Img = serverAddress + banner.Img
+	SendResponse(c, banner, "success")
+}
+func (r *Router) DeleteBanner(c *gin.Context) {
+	// Ambil ID dari parameter URL
+	id := c.Param("id")
+	// Panggil service untuk menemukan banner berdasarkan ID
+	banner, err := r.bannerService.Delete(c, id)
+	if err != nil {
+		SendError(c, "error", err.Error(), 404)
+		return
+	}
+
+	var scheme string
+	if c.Request.TLS != nil {
+		scheme = "https://"
+	} else {
+		scheme = "http://"
+	}
+	serverAddress := scheme + c.Request.Host
+	banner.Img = serverAddress + banner.Img
+	SendResponse(c, banner, "success")
 }
 
 func (r *Router) CreateBanner(c *gin.Context) {
@@ -86,6 +177,33 @@ func (r *Router) GetAllBanner(c *gin.Context) {
 
 	//Final Response
 	SendResponseGetAll(c, banner, "Get all banner", pagination)
+}
+
+func (r *Router) UpdateBanner(c *gin.Context) {
+	// Ambil ID dari parameter URL
+	id := c.Param("id")
+
+	// Bind input dari request JSON ke struct input
+	var input entity.BannerInput
+	if err := c.ShouldBind(&input); err != nil {
+		SendError(c, "error", err.Error(), 400)
+		return
+	}
+
+	// Panggil service untuk memperbarui banner berdasarkan ID
+	banner, err := r.bannerService.Update(c, id, input)
+	if err != nil {
+		// Jika banner tidak ditemukan
+		if err == gorm.ErrRecordNotFound {
+			SendError(c, "error", err.Error(), 404)
+			return
+		}
+
+		SendError(c, "error", err.Error(), 400)
+	}
+
+	// Jika berhasil, kembalikan respon sukses
+	SendResponse(c, banner, "success")
 }
 
 //

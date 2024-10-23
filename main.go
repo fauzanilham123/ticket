@@ -4,11 +4,17 @@ import (
 	"api-ticket/config"
 	"api-ticket/internal/cmd"
 	"api-ticket/internal/controllers/http"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"log"
 )
 
+// @title API Ticket Service
+// @version 1.0
+// @description This is an API documentation for Ticket Service.
+// @host localhost:8000
+// @BasePath /v1/banners
 func main() {
 	// for load godotenv
 	err := godotenv.Load()

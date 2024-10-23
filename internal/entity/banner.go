@@ -19,11 +19,17 @@ type (
 
 	IBannerService interface {
 		Create(c *gin.Context, req BannerInput) (err error)
+		Update(c *gin.Context, id string, req BannerInput) (banner Banner, err error)
+		FindByID(c *gin.Context, id string) (banner Banner, err error)
+		Delete(c *gin.Context, id string) (banner Banner, err error)
 		FindAll(c *gin.Context, filter RequestGetBanner) ([]Banner, int64, error)
 	}
 
 	IBannerRepository interface {
 		Create(banner Banner) error
+		Update(id string, banner Banner) (Banner, error)
+		FindByID(id string) (Banner, error)
+		Delete(id string) (Banner, error)
 		FindAll(filter RequestGetBanner) ([]Banner, int64, error)
 	}
 
@@ -31,6 +37,7 @@ type (
 		Title string `json:"title" form:"title" binding:"required"`
 		Slug  string `json:"slug" form:"slug" binding:"required"`
 		Desc  string `json:"desc" form:"desc" binding:"required"`
+		Img   string ``
 
 		CreatedAt time.Time `json:"created_at"`
 		UpdatedAt time.Time `json:"updated_at"`
