@@ -27,6 +27,10 @@ func handleUploadFile(c *gin.Context, form string) (string, error) {
 	var filename string
 
 	// Cek apakah ada file yang diunggah
+	if fileHeader == nil {
+		return "", errors.New("file is required")
+	}
+
 	if fileHeader != nil {
 		fileExtention := []string{".png", ".jpg", ".jpeg", ".svg"}
 		isFileValidated := utils.FileValidationByExtension(fileHeader, fileExtention)
@@ -39,7 +43,7 @@ func handleUploadFile(c *gin.Context, form string) (string, error) {
 
 		// Periksa ukuran file
 		if fileHeader.Size > maxFileSize {
-			return "", errors.New("File size too large (max 2MB)")
+			return "", errors.New("file size too large (max 2MB)")
 		}
 
 		extensionFile := filepath.Ext(fileHeader.Filename)
@@ -47,7 +51,7 @@ func handleUploadFile(c *gin.Context, form string) (string, error) {
 
 		isSaved := utils.SaveFile(c, fileHeader, filename)
 		if !isSaved {
-			return "", errors.New("Internal server error, can't save file")
+			return "", errors.New("internal server error, can't save file")
 		}
 	}
 
@@ -135,10 +139,11 @@ func (service BannerService) Update(c *gin.Context, id string, req entity.Banner
 	}
 
 	updatedBanner := entity.Banner{
-		Title: req.Title,
-		Desc:  req.Desc,
-		Slug:  req.Slug,
-		Img:   banner.Img,
+		Title:     req.Title,
+		Desc:      req.Desc,
+		Slug:      req.Slug,
+		Img:       banner.Img,
+		UpdatedAt: time.Now(),
 	}
 
 	return service.bannerRepository.Update(id, updatedBanner)

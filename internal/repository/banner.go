@@ -3,6 +3,7 @@ package repository
 import (
 	"api-ticket/internal/entity"
 	"errors"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -42,6 +43,15 @@ func (repo *BannerRepository) FindAll(filter entity.RequestGetBanner) ([]entity.
 		query = query.Limit(int(limit)).Offset(int(offset))
 	} else if filter.Limit != nil {
 		query = query.Limit(int(*filter.Limit))
+	}
+
+	// Apply OrderBy and Sort
+	if filter.OrderBy != nil {
+		sortOrder := "ASC"
+		if filter.Sort != nil && *filter.Sort == "desc" {
+			sortOrder = "DESC"
+		}
+		query = query.Order(fmt.Sprintf("%s %s", *filter.OrderBy, sortOrder))
 	}
 
 	result := query.Find(&banners)

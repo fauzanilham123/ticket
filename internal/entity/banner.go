@@ -37,10 +37,6 @@ type (
 		Title string `json:"title" form:"title" binding:"required"`
 		Slug  string `json:"slug" form:"slug" binding:"required"`
 		Desc  string `json:"desc" form:"desc" binding:"required"`
-		Img   string ``
-
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
 	}
 
 	RequestGetBanner struct {

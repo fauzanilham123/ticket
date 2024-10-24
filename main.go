@@ -10,11 +10,11 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// @title API Ticket Service
+// @title hepytic
 // @version 1.0
-// @description This is an API documentation for Ticket Service.
+// @description This is an API documentation for hepytic.
 // @host localhost:8000
-// @BasePath /v1/banners
+// @BasePath /v1
 func main() {
 	// for load godotenv
 	err := godotenv.Load()

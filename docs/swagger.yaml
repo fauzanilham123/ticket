@@ -1,9 +1,175 @@
-basePath: /v1/banners
+basePath: /v1
+definitions:
+  entity.Banner:
+    properties:
+      created_at:
+        type: string
+      desc:
+        type: string
+      id:
+        type: integer
+      img:
+        type: string
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact: {}
-  description: This is an API documentation for Ticket Service.
-  title: API Ticket Service
+  description: This is an API documentation for hepytic.
+  title: hepytic
   version: "1.0"
-paths: {}
+paths:
+  /banners/:
+    get:
+      description: Retrieve a list of all banners
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: order_by
+        in: query
+        name: order_by
+        type: string
+      - description: sort
+        in: query
+        name: sort
+        type: string
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Banner'
+            type: array
+      summary: Get all banners
+      tags:
+      - banners
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new banner with the given information
+      parameters:
+      - description: title of the banner
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: slug of the banner
+        in: formData
+        name: slug
+        required: true
+        type: string
+      - description: desc of the banner
+        in: formData
+        name: desc
+        required: true
+        type: string
+      - description: Image file to upload
+        in: formData
+        name: img
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Banner'
+      summary: Create a new banner
+      tags:
+      - banners
+  /banners/{id}:
+    delete:
+      description: Delete a banner by its ID
+      parameters:
+      - description: Banner ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a banner
+      tags:
+      - banners
+    get:
+      description: Retrieve a banner by its ID
+      parameters:
+      - description: Banner ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Banner'
+      summary: Get a banner by ID
+      tags:
+      - banners
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update a banner by its ID
+      parameters:
+      - description: Banner ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: title of the banner
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: slug of the banner
+        in: formData
+        name: slug
+        required: true
+        type: string
+      - description: desc of the banner
+        in: formData
+        name: desc
+        required: true
+        type: string
+      - description: Image file to upload
+        in: formData
+        name: img
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Banner'
+      summary: Update a banner
+      tags:
+      - banners
 swagger: "2.0"
