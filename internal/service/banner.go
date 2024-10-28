@@ -4,9 +4,7 @@ import (
 	"api-ticket/constanta"
 	"api-ticket/internal/entity"
 	"api-ticket/utils"
-	"errors"
 	"log"
-	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -20,44 +18,6 @@ func NewBannerService(bannerRepository entity.IBannerRepository) entity.IBannerS
 	return &BannerService{
 		bannerRepository: bannerRepository,
 	}
-}
-
-func handleUploadFile(c *gin.Context, form string) (string, error) {
-	fileHeader, _ := c.FormFile(form)
-	var filename string
-
-	// Cek apakah ada file yang diunggah
-	if fileHeader == nil {
-		return "", errors.New("file is required")
-	}
-
-	if fileHeader != nil {
-		fileExtention := []string{".png", ".jpg", ".jpeg", ".svg"}
-		isFileValidated := utils.FileValidationByExtension(fileHeader, fileExtention)
-		if !isFileValidated {
-			return "", errors.New("file not allowed")
-		}
-
-		// Batas ukuran file dalam byte (2MB)
-		maxFileSize := int64(2 * 1024 * 1024) // 2MB
-
-		// Periksa ukuran file
-		if fileHeader.Size > maxFileSize {
-			return "", errors.New("file size too large (max 2MB)")
-		}
-
-		extensionFile := filepath.Ext(fileHeader.Filename)
-		filename = utils.RandomFileName(extensionFile)
-
-		isSaved := utils.SaveFile(c, fileHeader, filename)
-		if !isSaved {
-			return "", errors.New("internal server error, can't save file")
-		}
-	}
-
-	// Jika tidak ada file yang diunggah, filename akan tetap kosong
-
-	return filename, nil
 }
 
 func (service *BannerService) FindByID(c *gin.Context, id string) (banner entity.Banner, err error) {
@@ -83,7 +43,7 @@ func (service *BannerService) Delete(c *gin.Context, id string) (banner entity.B
 }
 
 func (service BannerService) Create(c *gin.Context, req entity.BannerInput) (err error) {
-	filename, err := handleUploadFile(c, "img")
+	filename, err := utils.HandleUploadFile(c, "img")
 	if err != nil {
 		log.Println("INI ERR ====> ", err)
 		return
@@ -118,7 +78,7 @@ func (service BannerService) Update(c *gin.Context, id string, req entity.Banner
 		return bannerOld, err
 	}
 	// Map BannerInput ke entity.Banner
-	filename, err := handleUploadFile(c, "img")
+	filename, err := utils.HandleUploadFile(c, "img")
 	if err != nil {
 		log.Println("INI ERR ====> ", err)
 		return

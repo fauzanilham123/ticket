@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"math/rand"
@@ -82,4 +83,42 @@ func RemoveFile(filePath string) error {
 		return err
 	}
 	return nil
+}
+
+func HandleUploadFile(c *gin.Context, form string) (string, error) {
+	fileHeader, _ := c.FormFile(form)
+	var filename string
+
+	// Cek apakah ada file yang diunggah
+	if fileHeader == nil {
+		return "", errors.New("file is required")
+	}
+
+	if fileHeader != nil {
+		fileExtention := []string{".png", ".jpg", ".jpeg", ".svg"}
+		isFileValidated := FileValidationByExtension(fileHeader, fileExtention)
+		if !isFileValidated {
+			return "", errors.New("file not allowed")
+		}
+
+		// Batas ukuran file dalam byte (2MB)
+		maxFileSize := int64(2 * 1024 * 1024) // 2MB
+
+		// Periksa ukuran file
+		if fileHeader.Size > maxFileSize {
+			return "", errors.New("file size too large (max 2MB)")
+		}
+
+		extensionFile := filepath.Ext(fileHeader.Filename)
+		filename = RandomFileName(extensionFile)
+
+		isSaved := SaveFile(c, fileHeader, filename)
+		if !isSaved {
+			return "", errors.New("internal server error, can't save file")
+		}
+	}
+
+	// Jika tidak ada file yang diunggah, filename akan tetap kosong
+
+	return filename, nil
 }

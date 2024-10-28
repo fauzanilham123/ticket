@@ -48,6 +48,6 @@ type (
 	}
 )
 
-func TableName() string {
+func Tablebanner() string {
 	return "banners"
 }

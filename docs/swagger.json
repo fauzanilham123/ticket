@@ -228,6 +228,218 @@
                     }
                 }
             }
+        },
+        "/talents/": {
+            "get": {
+                "description": "Retrieve a list of all talents",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "talents"
+                ],
+                "summary": "Get all talents",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "order_by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by id_promotor_created",
+                        "name": "id_promotor_created",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Talent"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new talent with the given information",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "talents"
+                ],
+                "summary": "Create a new talent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name of the talent",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id_promotor_created of the talent",
+                        "name": "id_promotor_created",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "poto file to upload",
+                        "name": "photo",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Talent"
+                        }
+                    }
+                }
+            }
+        },
+        "/talents/{id}": {
+            "get": {
+                "description": "Retrieve a talent by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "talents"
+                ],
+                "summary": "Get a talent by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Talents ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Talent"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a talent by its ID",
+                "tags": [
+                    "talents"
+                ],
+                "summary": "Delete a talent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Talent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a talent by its ID",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "talents"
+                ],
+                "summary": "Update a talent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Talent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "name of the talent",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id_promotor_created of the talent",
+                        "name": "id_promotor_created",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "photo file to upload",
+                        "name": "photo",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Talent"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -250,6 +462,29 @@
                     "type": "string"
                 },
                 "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Talent": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_promotor_created": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "photo": {
                     "type": "string"
                 },
                 "updated_at": {

@@ -17,6 +17,21 @@ definitions:
       updated_at:
         type: string
     type: object
+  entity.Talent:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      id_promotor_created:
+        type: integer
+      name:
+        type: string
+      photo:
+        type: string
+      updated_at:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact: {}
@@ -172,4 +187,146 @@ paths:
       summary: Update a banner
       tags:
       - banners
+  /talents/:
+    get:
+      description: Retrieve a list of all talents
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: order_by
+        in: query
+        name: order_by
+        type: string
+      - description: sort
+        in: query
+        name: sort
+        type: string
+      - description: Filter by name
+        in: query
+        name: name
+        type: string
+      - description: Filter by id_promotor_created
+        in: query
+        name: id_promotor_created
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Talent'
+            type: array
+      summary: Get all talents
+      tags:
+      - talents
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new talent with the given information
+      parameters:
+      - description: name of the talent
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: id_promotor_created of the talent
+        in: formData
+        name: id_promotor_created
+        required: true
+        type: string
+      - description: poto file to upload
+        in: formData
+        name: photo
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Talent'
+      summary: Create a new talent
+      tags:
+      - talents
+  /talents/{id}:
+    delete:
+      description: Delete a talent by its ID
+      parameters:
+      - description: Talent ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a talent
+      tags:
+      - talents
+    get:
+      description: Retrieve a talent by its ID
+      parameters:
+      - description: Talents ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Talent'
+      summary: Get a talent by ID
+      tags:
+      - talents
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update a talent by its ID
+      parameters:
+      - description: Talent ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: name of the talent
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: id_promotor_created of the talent
+        in: formData
+        name: id_promotor_created
+        required: true
+        type: integer
+      - description: photo file to upload
+        in: formData
+        name: photo
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Talent'
+      summary: Update a talent
+      tags:
+      - talents
 swagger: "2.0"
