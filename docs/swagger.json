@@ -229,6 +229,334 @@
                 }
             }
         },
+        "/events/": {
+            "get": {
+                "description": "Retrieve a list of all events",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "events"
+                ],
+                "summary": "Get all events",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "order_by",
+                        "name": "order_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by id_talent",
+                        "name": "id_talent",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by title",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by desc",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by location",
+                        "name": "location",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by sk",
+                        "name": "sk",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by tag",
+                        "name": "tag",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by id_promotor_created",
+                        "name": "id_promotor_created",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.Event"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new event with the given information",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "events"
+                ],
+                "summary": "Create a new event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id_talent of the event",
+                        "name": "id_talent",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "title of the event",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "desc of the event",
+                        "name": "desc",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "date",
+                        "description": "date of the event",
+                        "name": "date",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "location of the event",
+                        "name": "location",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "sk of the event",
+                        "name": "sk",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tag of the event",
+                        "name": "tag",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id_promotor_created of the event",
+                        "name": "id_promotor_created",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "img_layout file to upload",
+                        "name": "img_layout",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Event"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "get": {
+                "description": "Retrieve a event by its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "events"
+                ],
+                "summary": "Get a event by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Event"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a event by its ID",
+                "tags": [
+                    "events"
+                ],
+                "summary": "Delete a event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Update a event by its ID",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "events"
+                ],
+                "summary": "Update a event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id_talent of the event",
+                        "name": "id_talent",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "title of the event",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "desc of the event",
+                        "name": "desc",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "date",
+                        "description": "date of the event",
+                        "name": "date",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "location of the event",
+                        "name": "location",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "sk of the event",
+                        "name": "sk",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "tag of the event",
+                        "name": "tag",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id_promotor_created of the event",
+                        "name": "id_promotor_created",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "img_layout file to upload",
+                        "name": "img_layout",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.Event"
+                        }
+                    }
+                }
+            }
+        },
         "/talents/": {
             "get": {
                 "description": "Retrieve a list of all talents",
@@ -271,7 +599,7 @@
                         "in": "query"
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "Filter by id_promotor_created",
                         "name": "id_promotor_created",
                         "in": "query"
@@ -459,6 +787,47 @@
                     "type": "string"
                 },
                 "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "entity.Event": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_promotor_created": {
+                    "type": "integer"
+                },
+                "id_talent": {
+                    "type": "string"
+                },
+                "img_layout": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "sk": {
+                    "type": "string"
+                },
+                "tag": {
                     "type": "string"
                 },
                 "title": {

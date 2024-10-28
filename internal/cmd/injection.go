@@ -21,3 +21,10 @@ func InitTalentService(db *gorm.DB) entity.ITalentService {
 
 	return talentService
 }
+
+func InitEventService(db *gorm.DB) entity.IEventService {
+	eventRepo := repository.NewEventRepository(db)
+	eventService := service.NewEventService(eventRepo)
+
+	return eventService
+}

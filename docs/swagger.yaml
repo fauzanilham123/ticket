@@ -17,6 +17,33 @@ definitions:
       updated_at:
         type: string
     type: object
+  entity.Event:
+    properties:
+      created_at:
+        type: string
+      date:
+        type: string
+      desc:
+        type: string
+      id:
+        type: integer
+      id_promotor_created:
+        type: integer
+      id_talent:
+        type: string
+      img_layout:
+        type: string
+      location:
+        type: string
+      sk:
+        type: string
+      tag:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
   entity.Talent:
     properties:
       created_at:
@@ -187,6 +214,230 @@ paths:
       summary: Update a banner
       tags:
       - banners
+  /events/:
+    get:
+      description: Retrieve a list of all events
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: order_by
+        in: query
+        name: order_by
+        type: string
+      - description: sort
+        in: query
+        name: sort
+        type: string
+      - description: Filter by id_talent
+        in: query
+        name: id_talent
+        type: string
+      - description: Filter by title
+        in: query
+        name: title
+        type: string
+      - description: Filter by desc
+        in: query
+        name: desc
+        type: string
+      - description: Filter by location
+        in: query
+        name: location
+        type: string
+      - description: Filter by sk
+        in: query
+        name: sk
+        type: string
+      - description: Filter by tag
+        in: query
+        name: tag
+        type: string
+      - description: Filter by id_promotor_created
+        in: query
+        name: id_promotor_created
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Event'
+            type: array
+      summary: Get all events
+      tags:
+      - events
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new event with the given information
+      parameters:
+      - description: id_talent of the event
+        in: formData
+        name: id_talent
+        required: true
+        type: string
+      - description: title of the event
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: desc of the event
+        in: formData
+        name: desc
+        required: true
+        type: string
+      - description: date of the event
+        format: date
+        in: formData
+        name: date
+        required: true
+        type: string
+      - description: location of the event
+        in: formData
+        name: location
+        required: true
+        type: string
+      - description: sk of the event
+        in: formData
+        name: sk
+        required: true
+        type: string
+      - description: tag of the event
+        in: formData
+        name: tag
+        required: true
+        type: string
+      - description: id_promotor_created of the event
+        in: formData
+        name: id_promotor_created
+        required: true
+        type: string
+      - description: img_layout file to upload
+        in: formData
+        name: img_layout
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Event'
+      summary: Create a new event
+      tags:
+      - events
+  /events/{id}:
+    delete:
+      description: Delete a event by its ID
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete a event
+      tags:
+      - events
+    get:
+      description: Retrieve a event by its ID
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Event'
+      summary: Get a event by ID
+      tags:
+      - events
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update a event by its ID
+      parameters:
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: id_talent of the event
+        in: formData
+        name: id_talent
+        required: true
+        type: string
+      - description: title of the event
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: desc of the event
+        in: formData
+        name: desc
+        required: true
+        type: string
+      - description: date of the event
+        format: date
+        in: formData
+        name: date
+        required: true
+        type: string
+      - description: location of the event
+        in: formData
+        name: location
+        required: true
+        type: string
+      - description: sk of the event
+        in: formData
+        name: sk
+        required: true
+        type: string
+      - description: tag of the event
+        in: formData
+        name: tag
+        required: true
+        type: string
+      - description: id_promotor_created of the event
+        in: formData
+        name: id_promotor_created
+        required: true
+        type: string
+      - description: img_layout file to upload
+        in: formData
+        name: img_layout
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Event'
+      summary: Update a event
+      tags:
+      - events
   /talents/:
     get:
       description: Retrieve a list of all talents
@@ -214,7 +465,7 @@ paths:
       - description: Filter by id_promotor_created
         in: query
         name: id_promotor_created
-        type: string
+        type: integer
       produces:
       - application/json
       responses:

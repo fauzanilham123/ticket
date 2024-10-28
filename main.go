@@ -62,10 +62,12 @@ func main() {
 	//Inject Service
 	bannerSetup := cmd.InitBannerService(db)
 	talentSetup := cmd.InitTalentService(db)
+	eventSetup := cmd.InitEventService(db)
 	http.RouteService(
 		&app.RouterGroup,
 		bannerSetup,
 		talentSetup,
+		eventSetup,
 	)
 
 	app.Static("/public", "./public")

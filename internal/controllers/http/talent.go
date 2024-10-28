@@ -109,7 +109,7 @@ func (r *Router) CreateTalent(c *gin.Context) {
 // @Param order_by query string false "order_by"
 // @Param sort query string false "sort"
 // @Param name query string false "Filter by name"
-// @Param id_promotor_created query string false "Filter by id_promotor_created"
+// @Param id_promotor_created query integer false "Filter by id_promotor_created"
 // @Success 200 {array} entity.Talent
 // @Router /talents/ [get]
 func (r *Router) GetAllTalent(c *gin.Context) {

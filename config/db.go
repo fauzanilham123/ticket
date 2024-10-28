@@ -24,7 +24,7 @@ func ConnectDatabase() *gorm.DB {
 		panic(err.Error())
 	}
 
-	db.AutoMigrate(&entity.Banner{}, &entity.Talent{})
+	db.AutoMigrate(&entity.Banner{}, &entity.Talent{}, &entity.Event{})
 
 	return db
 }
