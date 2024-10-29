@@ -63,11 +63,13 @@ func main() {
 	bannerSetup := cmd.InitBannerService(db)
 	talentSetup := cmd.InitTalentService(db)
 	eventSetup := cmd.InitEventService(db)
+	authSetup := cmd.InitAuthService(db)
 	http.RouteService(
 		&app.RouterGroup,
 		bannerSetup,
 		talentSetup,
 		eventSetup,
+		authSetup,
 	)
 
 	app.Static("/public", "./public")

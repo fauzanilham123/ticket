@@ -28,3 +28,10 @@ func InitEventService(db *gorm.DB) entity.IEventService {
 
 	return eventService
 }
+
+func InitAuthService(db *gorm.DB) entity.IAuthService {
+	authRepo := repository.NewAuthRepository(db)
+	authService := service.NewAuthService(authRepo)
+
+	return authService
+}

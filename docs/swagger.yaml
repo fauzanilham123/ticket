@@ -59,6 +59,28 @@ definitions:
       updated_at:
         type: string
     type: object
+  entity.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      id_customer:
+        type: integer
+      id_promotor:
+        type: integer
+      id_type:
+        type: integer
+      name:
+        type: string
+      token:
+        description: field token
+        type: string
+      updated_at:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact: {}
@@ -66,6 +88,81 @@ info:
   title: hepytic
   version: "1.0"
 paths:
+  /auth/customer/login:
+    post:
+      description: Login Customer
+      parameters:
+      - description: email
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.User'
+            type: array
+      summary: Login Customer
+      tags:
+      - auth
+  /auth/customer/register:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Register Customer with the given information
+      parameters:
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: email
+        in: formData
+        name: email
+        required: true
+        type: string
+      - description: id_type
+        in: formData
+        name: id_type
+        type: string
+      - description: id_promotor
+        in: formData
+        name: id_promotor
+        type: string
+      - description: password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: gender
+        in: formData
+        name: gender
+        required: true
+        type: string
+      - description: birthday
+        in: formData
+        name: birthday
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+      summary: Register Customer
+      tags:
+      - auth
   /banners/:
     get:
       description: Retrieve a list of all banners

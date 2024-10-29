@@ -14,6 +14,7 @@ type Router struct {
 	bannerService entity.IBannerService
 	talentService entity.ITalentService
 	eventService  entity.IEventService
+	authService   entity.IAuthService
 }
 
 func RouteService(
@@ -21,11 +22,13 @@ func RouteService(
 	bannerService entity.IBannerService,
 	talentSerice entity.ITalentService,
 	eventSerice entity.IEventService,
+	authSerice entity.IAuthService,
 ) {
 	router := &Router{
 		bannerService: bannerService,
 		talentService: talentSerice,
 		eventService:  eventSerice,
+		authService:   authSerice,
 	}
 
 	//Apply Middleware here
@@ -42,6 +45,7 @@ func (r *Router) handlers(app *gin.RouterGroup) {
 		r.initBannerURLRoutes(apiGroupV1)
 		r.initTalentURLRoutes(apiGroupV1)
 		r.initEventURLRoutes(apiGroupV1)
+		r.initAuthURLRoutes(apiGroupV1)
 	}
 }
 
