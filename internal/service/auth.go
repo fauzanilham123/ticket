@@ -49,7 +49,7 @@ func (service AuthService) Register(c *gin.Context, req entity.RegisterInputCust
 
 	if User, err = service.authRepository.RegisterCustomer(User, Customer); err != nil {
 		log.Println("INI ERR ====> ", err)
-		return
+		return User, err
 	}
 	return User, err
 }

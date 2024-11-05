@@ -3,6 +3,9 @@ package repository
 import (
 	"api-ticket/internal/entity"
 	"errors"
+	"strings"
+
+	// Pastikan ini ditambahkan untuk PostgreSQL
 
 	"golang.org/x/crypto/bcrypt" // Import bcrypt untuk hashingpassword
 	"gorm.io/gorm"
@@ -27,7 +30,7 @@ func (repo *AuthRepository) RegisterCustomer(user entity.User, customer entity.C
 
 	// Buat customer terlebih dahulu
 	if err := tx.Omit("updated_at").Create(&customer).Error; err != nil {
-		tx.Rollback() // rollback jika error
+		tx.Rollback() // rollback untuk error lainnya
 		return entity.User{}, err
 	}
 
@@ -36,7 +39,11 @@ func (repo *AuthRepository) RegisterCustomer(user entity.User, customer entity.C
 
 	// Buat user setelah customer berhasil dibuat
 	if err := tx.Omit("updated_at").Create(&user).Error; err != nil {
-		tx.Rollback() // rollback jika error
+		if strings.Contains(err.Error(), "SQLSTATE 23505") {
+			tx.Rollback()
+			return entity.User{}, errors.New("email already exists") // Custom error message
+		}
+		tx.Rollback() // rollback untuk error lainnya
 		return entity.User{}, err
 	}
 

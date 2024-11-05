@@ -13,12 +13,19 @@ import (
 type BaseController struct {
 }
 
-type Response struct {
+type ResponseGetAll struct {
 	Success    bool        `json:"success"`
 	Code       int         `json:"code"`
 	Message    string      `json:"message"`
 	Result     interface{} `json:"result"`
 	Pagination Paginations `json:"pagination,omitempty"`
+}
+
+type Response struct {
+	Success bool        `json:"success"`
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Result  interface{} `json:"result"`
 }
 
 type Paginations struct {
@@ -46,7 +53,7 @@ func SendResponse(ctx *gin.Context, result interface{}, message string) {
 	ctx.JSON(http.StatusOK, response)
 }
 func SendResponseGetAll(ctx *gin.Context, result interface{}, message string, pagination Paginations) {
-	response := Response{
+	response := ResponseGetAll{
 		Success:    true,
 		Code:       200,
 		Message:    message,
