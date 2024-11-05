@@ -18,7 +18,7 @@ func NewEventRepository(db *gorm.DB) entity.IEventRepository {
 }
 
 func (repo *EventRepository) Create(event entity.Event) error {
-	return repo.db.Create(&event).Error
+	return repo.db.Omit("updated_at").Create(&event).Error
 }
 
 func (repo *EventRepository) FindAll(filter entity.RequestGetEvent) ([]entity.Event, int64, error) {

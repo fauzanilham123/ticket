@@ -22,8 +22,6 @@ func (r *Router) initAuthURLRoutes(app *gin.RouterGroup) {
 // @Produce json
 // @Param name formData string true "name"
 // @Param email formData string true "email"
-// @Param id_type formData string false "id_type"
-// @Param id_promotor formData string false "id_promotor"
 // @Param password formData string true "password"
 // @Param gender formData string true "gender"
 // @Param birthday formData string true "birthday"

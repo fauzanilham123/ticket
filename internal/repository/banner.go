@@ -17,7 +17,7 @@ func NewBannerRepository(db *gorm.DB) entity.IBannerRepository {
 }
 
 func (repo *BannerRepository) Create(banner entity.Banner) error {
-	return repo.db.Create(&banner).Error
+	return repo.db.Omit("updated_at").Create(&banner).Error
 }
 
 func (repo *BannerRepository) FindAll(filter entity.RequestGetBanner) ([]entity.Banner, int64, error) {

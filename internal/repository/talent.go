@@ -18,7 +18,7 @@ func NewTalentRepository(db *gorm.DB) entity.ITalentRepository {
 }
 
 func (repo *TalentRepository) Create(talent entity.Talent) error {
-	return repo.db.Create(&talent).Error
+	return repo.db.Omit("updated_at").Create(&talent).Error
 }
 
 func (repo *TalentRepository) FindAll(filter entity.RequestGetTalent) ([]entity.Talent, int64, error) {

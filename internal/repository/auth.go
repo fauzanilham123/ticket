@@ -26,7 +26,7 @@ func (repo *AuthRepository) RegisterCustomer(user entity.User, customer entity.C
 	}
 
 	// Buat customer terlebih dahulu
-	if err := tx.Create(&customer).Error; err != nil {
+	if err := tx.Omit("updated_at").Create(&customer).Error; err != nil {
 		tx.Rollback() // rollback jika error
 		return entity.User{}, err
 	}
@@ -35,7 +35,7 @@ func (repo *AuthRepository) RegisterCustomer(user entity.User, customer entity.C
 	user.Id_Customer = customer.Id // Asumsi User memiliki foreign key `Id_Customer`
 
 	// Buat user setelah customer berhasil dibuat
-	if err := tx.Create(&user).Error; err != nil {
+	if err := tx.Omit("updated_at").Create(&user).Error; err != nil {
 		tx.Rollback() // rollback jika error
 		return entity.User{}, err
 	}

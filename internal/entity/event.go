@@ -12,7 +12,7 @@ type (
 		Id_talent           string    `json:"id_talent"`
 		Title               string    `json:"title"`
 		Desc                string    `json:"desc" gorm:"text"`
-		Date                time.Time `json:"date"`
+		Date                string    `json:"date"`
 		Location            string    `json:"location"`
 		Sk                  string    `json:"sk" gorm:"text"`
 		Tag                 string    `json:"tag"`
@@ -39,29 +39,29 @@ type (
 	}
 
 	EventInput struct {
-		Id_talent           []string  `json:"id_talent" form:"id_talent"`
-		Title               string    `json:"title" form:"title"`
-		Desc                string    `json:"desc" form:"desc"`
-		Date                time.Time `json:"date" form:"date"`
-		Location            string    `json:"location" form:"location"`
-		Sk                  string    `json:"sk" form:"sk"`
-		Tag                 []string  `json:"tag" form:"tag"`
-		Id_promotor_created int       `json:"id_promotor_created" form:"id_promotor_created"`
+		Id_talent           []string `json:"id_talent" form:"id_talent"`
+		Title               string   `json:"title" form:"title"`
+		Desc                string   `json:"desc" form:"desc"`
+		Date                string   `json:"date" form:"date"`
+		Location            string   `json:"location" form:"location"`
+		Sk                  string   `json:"sk" form:"sk"`
+		Tag                 []string `json:"tag" form:"tag"`
+		Id_promotor_created int      `json:"id_promotor_created" form:"id_promotor_created"`
 	}
 
 	RequestGetEvent struct {
-		Limit               *int       `json:"limit" form:"limit"`
-		Offset              *int       `json:"offset" form:"offset"`
-		OrderBy             *OrderBy   `json:"order_by" form:"order_by"`
-		Sort                *string    `json:"sort" form:"sort"`
-		Id_talent           *string    `json:"id_talent" form:"id_talent"`
-		Title               *string    `json:"title" form:"title"`
-		Desc                *string    `json:"desc" form:"desc"`
-		Date                *time.Time `json:"date" form:"date"`
-		Location            *string    `json:"location" form:"location"`
-		Sk                  *string    `json:"sk" form:"sk"`
-		Tag                 *string    `json:"tag" form:"tag"`
-		Id_promotor_created *int       `json:"id_promotor_created" form:"id_promotor_created"`
+		Limit               *int     `json:"limit" form:"limit"`
+		Offset              *int     `json:"offset" form:"offset"`
+		OrderBy             *OrderBy `json:"order_by" form:"order_by"`
+		Sort                *string  `json:"sort" form:"sort"`
+		Id_talent           *string  `json:"id_talent" form:"id_talent"`
+		Title               *string  `json:"title" form:"title"`
+		Desc                *string  `json:"desc" form:"desc"`
+		Date                *string  `json:"date" form:"date"`
+		Location            *string  `json:"location" form:"location"`
+		Sk                  *string  `json:"sk" form:"sk"`
+		Tag                 *string  `json:"tag" form:"tag"`
+		Id_promotor_created *int     `json:"id_promotor_created" form:"id_promotor_created"`
 	}
 )
 
