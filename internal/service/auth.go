@@ -26,10 +26,11 @@ func NewAuthService(authRepository entity.IAuthRepository) entity.IAuthService {
 func (service AuthService) Register(c *gin.Context, req entity.RegisterInputCustomer) (user entity.User, err error) {
 	// Create
 	Customer := entity.Customer{
-		Name:      req.Name,
-		Gender:    req.Gender,
-		Birthday:  req.Birthday,
-		CreatedAt: time.Now(),
+		Name:        req.Name,
+		Gender:      req.Gender,
+		Birthday:    req.Birthday,
+		PhoneNumber: req.PhoneNumber,
+		CreatedAt:   time.Now(),
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)

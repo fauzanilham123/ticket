@@ -84,18 +84,6 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "id_type",
-                        "name": "id_type",
-                        "in": "formData"
-                    },
-                    {
-                        "type": "string",
-                        "description": "id_promotor",
-                        "name": "id_promotor",
-                        "in": "formData"
-                    },
-                    {
-                        "type": "string",
                         "description": "password",
                         "name": "password",
                         "in": "formData",
@@ -112,6 +100,13 @@ const docTemplate = `{
                         "type": "string",
                         "description": "birthday",
                         "name": "birthday",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "phone_number",
+                        "name": "phone_number",
                         "in": "formData",
                         "required": true
                     }

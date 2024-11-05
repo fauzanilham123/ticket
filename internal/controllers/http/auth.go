@@ -25,6 +25,7 @@ func (r *Router) initAuthURLRoutes(app *gin.RouterGroup) {
 // @Param password formData string true "password"
 // @Param gender formData string true "gender"
 // @Param birthday formData string true "birthday"
+// @Param phone_number formData string true "phone_number"
 // @Success 200 {object} entity.User
 // @Router /auth/customer/register [post]
 func (r *Router) Register(c *gin.Context) {

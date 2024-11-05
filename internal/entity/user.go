@@ -38,6 +38,7 @@ type (
 		Password    string `json:"password" form:"password" binding:"required"`
 		Gender      string `json:"gender" form:"gender"`
 		Birthday    string `json:"birthday" form:"birthday"`
+		PhoneNumber string `json:"phone_number" form:"phone_number"`
 	}
 
 	LoginInput struct {
